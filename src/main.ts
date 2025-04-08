@@ -13,6 +13,11 @@ import ToastService from 'primevue/toastService'
 import Toast from 'primevue/toast'
 import ProgressSpinner from 'primevue/progressspinner'
 import Card from 'primevue/card'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import ConfirmDialog from 'primevue/confirmdialog'
+import ConfirmationService from 'primevue/confirmationservice'
+import InlineMessage from 'primevue/inlinemessage'
 
 import App from './App.vue'
 import { initializeApp } from "firebase/app"
@@ -27,11 +32,16 @@ app.use(createPinia())
 app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
+app.use(ConfirmationService)
 app.component('app-menubar', Menubar)
 app.component('app-button', Button)
 app.component('app-input-text', InputText)
 app.component('app-toast', Toast)
 app.component('app-progress', ProgressSpinner)
 app.component('app-card', Card)
+app.component('app-data-table', DataTable)
+app.component('app-column-table', Column)
+app.component('app-confirm', ConfirmDialog)
+app.component('app-message', InlineMessage)
 
 app.mount('#app')

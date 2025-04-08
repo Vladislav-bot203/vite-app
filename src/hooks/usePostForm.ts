@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue'
 import type Interview from '@/types/interfaces'
 import { v4 as uuidv4 } from 'uuid'
-import { getAuth } from 'firebase/auth'
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
+import useUserStore from '@/stores/user-storage'
 
 export default function usePostForm() {
   const company = ref<string>('')
@@ -15,6 +15,7 @@ export default function usePostForm() {
   const loading = ref<boolean>(false)
   const db = getFirestore()
   const router = useRouter()
+  const userStore = useUserStore()
 
   async function addNewInterview(): Promise<void> {
     loading.value = true
@@ -25,10 +26,11 @@ export default function usePostForm() {
       hrName: hrName.value,
       contactTelegram: contactTelegram.value,
       contactPhone: contactPhone.value,
+      contactWhatsApp: contactWhatsApp.value,
       createdAt: new Date()
     }
 
-    const userId = getAuth().currentUser?.uid
+    const userId = userStore.userId
 
     if (userId) {
       await setDoc(doc(db, `users/${userId}/interviews`, payload.id), payload).then(() => {
