@@ -18,6 +18,10 @@ import Column from 'primevue/column'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import InlineMessage from 'primevue/inlinemessage'
+import InputNumber from 'primevue/inputnumber'
+import Textarea from 'primevue/textarea'
+import Calendar from 'primevue/calendar'
+import RadioButton from 'primevue/radiobutton'
 
 import App from './App.vue'
 import { initializeApp } from "firebase/app"
@@ -43,5 +47,9 @@ app.component('app-data-table', DataTable)
 app.component('app-column-table', Column)
 app.component('app-confirm', ConfirmDialog)
 app.component('app-message', InlineMessage)
+app.component('app-input-number', InputNumber)
+app.component('app-textarea', Textarea)
+app.component('app-calendar', Calendar)
+app.component('app-radiobutton', RadioButton)
 
 app.mount('#app')

@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import type Interview from '@/types/interfaces'
+import type Interview from '@/types/interview'
 import { v4 as uuidv4 } from 'uuid'
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'

@@ -72,7 +72,7 @@ import {
   doc
 } from 'firebase/firestore'
 import useUserStore from '@/stores/user-storage'
-import type Interview from '@/types/interfaces'
+import type Interview from '@/types/interview'
 import { useConfirm } from 'primevue/useconfirm'
 
 const userStore = useUserStore()

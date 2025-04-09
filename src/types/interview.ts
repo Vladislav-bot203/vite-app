@@ -1,3 +1,5 @@
+import type Stage from "./stage"
+
 export default interface Interview {
   id: string
   company: string
@@ -6,5 +8,9 @@ export default interface Interview {
   contactTelegram?: string
   contactWhatsApp?: string
   contactPhone?: string
-  createdAt: Date
+  createdAt: Date,
+  salaryFrom?: number,
+  salaryTo?: number,
+  stages?: Stage[],
+  result: 'Refusal' | 'Offer' 
 }
