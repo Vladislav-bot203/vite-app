@@ -133,12 +133,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore'
 import useUserStore from '@/stores/user-storage'
 import type Interview from '@/types/interview'
 import { useRoute } from 'vue-router'
 import type Stage from '@/types/stage'
-import dayjs from 'dayjs'
 
 const db = getFirestore()
 const userStore = useUserStore()
@@ -151,7 +150,20 @@ const docRef = doc(db, `users/${userStore.userId}/interviews`, route.params.id a
 const getData = async (): Promise<void> => {
   isLoading.value = true
   const docSnap = await getDoc(docRef)
-  interview.value = docSnap.data() as Interview
+
+  if (docSnap.exists()) {
+    const data = docSnap.data() as Interview
+
+    if (data.stages && data.stages.length) {
+      data.stages = data.stages.map((stage: Stage) => {
+        if (stage.date && stage.date instanceof Timestamp) {
+          return { ...stage, date: stage.date.toDate()}
+        }
+        return stage
+      })
+    }
+    interview.value = data
+  }
   isLoading.value = false
 }
 
@@ -162,7 +174,7 @@ const addStage = () => {
     if (!interview.value.stages) {
       interview.value.stages = []
     }
-    interview.value.stages.push({ name: '', date: '', description: '' })
+    interview.value.stages.push({ name: '', date: null, description: '' })
   }
 }
 
@@ -176,14 +188,7 @@ const removeStage = (index: number) => {
 
 const saveInterview = async (): Promise<void> => {
   isLoading.value = true
-  if (interview.value?.stages && interview.value.stages.length) {
-    interview.value.stages = interview.value.stages.map((stage: Stage) => {
-      return {
-        ...stage,
-        date: dayjs(stage.date).format('DD.MM.YYYY')
-      }
-    })
-  }
+  
   await updateDoc(docRef, { ...interview.value })
   await getData()
   isLoading.value = false

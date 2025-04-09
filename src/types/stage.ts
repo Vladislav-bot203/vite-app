@@ -1,5 +1,5 @@
 export default interface Stage {
     name: string
-    date: string
+    date: Date | null
     description: string
 }

@@ -22,6 +22,8 @@ import InputNumber from 'primevue/inputnumber'
 import Textarea from 'primevue/textarea'
 import Calendar from 'primevue/calendar'
 import RadioButton from 'primevue/radiobutton'
+import Badge from 'primevue/badge'
+import Tooltip from 'primevue/tooltip'
 
 import App from './App.vue'
 import { initializeApp } from "firebase/app"
@@ -37,6 +39,7 @@ app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
 app.use(ConfirmationService)
+app.directive('tooltip', Tooltip)
 app.component('app-menubar', Menubar)
 app.component('app-button', Button)
 app.component('app-input-text', InputText)
@@ -51,5 +54,6 @@ app.component('app-input-number', InputNumber)
 app.component('app-textarea', Textarea)
 app.component('app-calendar', Calendar)
 app.component('app-radiobutton', RadioButton)
+app.component('app-badge', Badge)
 
 app.mount('#app')
