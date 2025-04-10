@@ -24,7 +24,7 @@
             <label for="offer" class="ml-2">Оффер</label>
           </div>
           <app-button @click="submitFilter" class="mr-2 ml-3" :disabled="!selectedFilter">Применить</app-button>
-          <app-button class="mr-2" severity="danger" :disabled="!selectedFilter">Сбросить</app-button>
+          <app-button @click="reset" class="mr-2" severity="danger" :disabled="!selectedFilter">Сбросить</app-button>
     </div>
 
     <app-data-table :value="interviews">
@@ -152,35 +152,19 @@ const getAllInteviews = async <T extends Interview>(isFilter?: boolean): Promise
   return listDocs.docs.map((doc) => doc.data() as T)
 }
 
-// const getAllInteviews = async <T extends Interview>(isFilter?: boolean): Promise<T[]> => {
-//   try {
-//     let q;
-//     const baseQuery = collection(db, `users/${userStore.userId}/interviews`);
-
-//     if (isFilter && selectedFilter.value) {
-//       q = query(
-//         baseQuery,
-//         where('result', '==', selectedFilter.value),
-//         orderBy('createdAt', 'desc')
-//       );
-//     } else {
-//       q = query(baseQuery, orderBy('createdAt', 'desc'));
-//     }
-
-//     const querySnapshot = await getDocs(q);
-//     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T));
-//   } catch (error) {
-//     console.error("Error fetching interviews:", error);
-//     throw error;
-//   }
-// }
-
 async function submitFilter (): Promise<void> {
   isLoading.value = true
   const listInterviews: Array<Interview> = await getAllInteviews(true)
   interviews.value = listInterviews
   isLoading.value = false
 } 
+
+async function reset () {
+  isLoading.value = true
+  selectedFilter.value = ''
+  interviews.value = await getAllInteviews()
+  isLoading.value = false
+}
 
 const confirmRemoveInterview = async (id: string): Promise<void> => {
   confirm.require({

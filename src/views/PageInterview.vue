@@ -108,7 +108,7 @@
             <app-radiobutton
               inputId="interviewResult1"
               name="result"
-              value="Refusual"
+              value="Refusal"
               v-model="interview.result"
             ></app-radiobutton>
             <label for="interviewResult1" class="ml-2">Отказ</label>
